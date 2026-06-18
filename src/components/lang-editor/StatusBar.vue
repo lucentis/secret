@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import DictionaryDialog from './DictionaryDialog.vue';
+
 defineProps<{ dictionarySize: number }>();
 defineEmits<{ "view-dictionary": [] }>();
+
+const open = ref(false);
+
 </script>
 
 <template>
@@ -13,10 +19,12 @@ defineEmits<{ "view-dictionary": [] }>();
       <span>Dictionary: {{ dictionarySize }} tokens</span>
       <button
         class="rounded-md border border-violet-200 px-3 py-1 font-medium text-violet-600 hover:bg-violet-50"
-        @click="$emit('view-dictionary')"
+        @click="open = true"
       >
         View dictionary
       </button>
     </div>
+
+    <DictionaryDialog v-model:open="open" />
   </div>
 </template>

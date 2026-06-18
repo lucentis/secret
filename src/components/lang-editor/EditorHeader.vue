@@ -32,10 +32,7 @@ defineEmits<{ "update:mode": [value: ViewMode] }>();
       </div>
 
       <div class="mx-1 h-5 w-px bg-border" />
-
-      <button class="rounded-md p-1.5 text-muted-foreground hover:bg-muted" aria-label="Toggle theme">
-        <Sun class="h-4 w-4" />
-      </button>
+      
       <Popover>
         <PopoverTrigger as-child>
           <button
