@@ -1,0 +1,30 @@
+export type SymbolId = "square" | "circle" | "triangle" | "diamond";
+
+export interface Token {
+  raw: string;
+  key: string;
+  line: number;
+  column: number;
+  length: number;
+  group: number;
+}
+
+export interface DictionaryEntry {
+  key: string;
+  symbol: SymbolId;
+}
+
+export interface ResolvedToken {
+  token: Token;
+  symbol: SymbolId | null;
+}
+
+export interface TokenError {
+  token: Token;
+  suggestions: string[];
+}
+
+export interface ResolveResult {
+  items: ResolvedToken[];
+  errors: TokenError[];
+}
