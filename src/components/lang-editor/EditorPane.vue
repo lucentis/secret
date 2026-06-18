@@ -72,8 +72,8 @@ function onInput(event: Event) {
       <textarea
         ref="textareaRef"
         :value="modelValue"
-        class="absolute inset-0 h-full w-full resize-none overflow-auto whitespace-pre bg-transparent px-3 py-4 leading-6 text-transparent outline-none"
-        :style="{ caretColor: 'var(--foreground)' }"
+        class="caret-black absolute inset-0 h-full w-full resize-none overflow-auto whitespace-pre bg-transparent px-3 py-4 leading-6 text-transparent outline-none"
+        
         spellcheck="false"
         @input="onInput"
         @scroll="syncScroll"

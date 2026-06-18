@@ -1,6 +1,6 @@
 import type { Token } from "./types";
 
-const LETTER = /[a-zA-Z]/;
+const LETTER = /[a-zA-Z\u00e9\u00c9]/; // includes é / É
 
 export function tokenize(source: string): Token[] {
   const tokens: Token[] = [];

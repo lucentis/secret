@@ -1,4 +1,4 @@
-export type SymbolId = "square" | "circle" | "triangle" | "diamond";
+export type SymbolId = string;
 
 export interface Token {
   raw: string;
