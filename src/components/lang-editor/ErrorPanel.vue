@@ -12,7 +12,7 @@ function toggle(index: number) {
 </script>
 
 <template>
-  <div class="rounded-lg border">
+  <div class="rounded-lg border max-h-60 overflow-y-auto">
     <p v-if="!errors.length" class="px-4 py-6 text-center text-sm text-muted-foreground">
       No errors detected
     </p>

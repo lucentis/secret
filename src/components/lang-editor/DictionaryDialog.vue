@@ -69,7 +69,7 @@ const compounds = [
         <section>
           <h3 class="mb-3 text-sm font-semibold">Voyelles</h3>
 
-          <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+          <div class="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
             <div
               v-for="[token, symbol] in vowels"
               :key="token"
@@ -85,7 +85,7 @@ const compounds = [
         <section>
           <h3 class="mb-3 text-sm font-semibold">Consonnes</h3>
 
-          <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+          <div class="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
             <div
               v-for="[token, symbol] in consonants"
               :key="token"
@@ -101,7 +101,7 @@ const compounds = [
         <section>
           <h3 class="mb-3 text-sm font-semibold">Sons composés</h3>
 
-          <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+          <div class="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
             <div
               v-for="[token, symbol] in compounds"
               :key="token"

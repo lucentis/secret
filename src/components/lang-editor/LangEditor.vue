@@ -50,7 +50,7 @@ async function copyOutput() {
       </section>
     </div>
 
-    <div class="border-t px-6 py-4">
+    <div class="border-t px-6 py-4 ">
       <div class="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
         <span>Errors</span>
         <span
