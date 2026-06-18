@@ -1,10 +1,55 @@
 <script setup lang="ts">
-import { Braces, Sun, CircleHelp } from "lucide-vue-next";
-import type { ViewMode } from "@/composables/useLangEditor";
+import { Braces, CircleHelp } from "lucide-vue-next";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Download } from "@lucide/vue";
+import type { ResolveResult } from "@/lib/lang-editor/types";
 
-defineProps<{ mode: ViewMode }>();
-defineEmits<{ "update:mode": [value: ViewMode] }>();
+const props = defineProps<{
+  resolved: ResolveResult;
+  source: string;
+}>();
+
+function exportText() {
+  const content = props.resolved.items
+    .map((item) => item.symbol ?? item.token.raw)
+    .join(" ");
+
+  downloadFile(content, "document.txt", "text/plain");
+}
+
+function exportJson() {
+  const content = JSON.stringify(
+    {
+      source: props.source,
+      items: props.resolved.items,
+      errors: props.resolved.errors,
+    },
+    null,
+    2
+  );
+
+  downloadFile(content, "document.json", "application/json");
+}
+
+function downloadFile(
+  content: string,
+  filename: string,
+  mimeType: string
+) {
+  const blob = new Blob([content], {
+    type: mimeType,
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
 </script>
 
 <template>
@@ -14,25 +59,41 @@ defineEmits<{ "update:mode": [value: ViewMode] }>();
     <span class="text-xs text-muted-foreground">v0.1.0</span>
 
     <div class="ml-auto flex items-center gap-2">
-      <div class="flex overflow-hidden rounded-md border">
-        <button
-          class="px-3 py-1.5 text-xs font-medium transition-colors"
-          :class="mode === 'tokens' ? 'bg-violet-600 text-white' : 'bg-background text-muted-foreground hover:bg-muted'"
-          @click="$emit('update:mode', 'tokens')"
-        >
-          Tokens
-        </button>
-        <button
-          class="px-3 py-1.5 text-xs font-medium transition-colors"
-          :class="mode === 'symbols' ? 'bg-violet-600 text-white' : 'bg-background text-muted-foreground hover:bg-muted'"
-          @click="$emit('update:mode', 'symbols')"
-        >
-          Symbols
-        </button>
-      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger as-child>
+          <button
+            class="flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm hover:bg-muted"
+          >
+            <Download class="h-4 w-4" />
+            Export
+          </button>
+        </DropdownMenuTrigger>
 
+        <DropdownMenuContent align="end" class="w-48">
+          <DropdownMenuLabel>Exporter</DropdownMenuLabel>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem @select="exportText">
+            Texte brut (.txt)
+          </DropdownMenuItem>
+
+          <DropdownMenuItem @select="exportJson">
+            JSON (.json)
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem disabled>
+            PDF (bientôt)
+          </DropdownMenuItem>
+
+          <DropdownMenuItem disabled>
+            Image PNG (bientôt)
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <div class="mx-1 h-5 w-px bg-border" />
-      
       <Popover>
         <PopoverTrigger as-child>
           <button
