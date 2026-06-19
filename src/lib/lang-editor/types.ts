@@ -13,6 +13,11 @@ export interface DictionaryEntry {
   symbol: SymbolId;
 }
 
+export type DictionaryType =
+  | "shape"
+  | "rune"
+  | "greek";
+
 export interface ResolvedToken {
   token: Token;
   symbol: SymbolId | null;
