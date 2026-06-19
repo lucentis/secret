@@ -41,7 +41,6 @@ function toggle(index: number) {
           />
         </button>
         <div v-if="expandedIndex === index" class="px-4 pb-3 text-xs text-muted-foreground">
-          Token length {{ error.token.length }}, word group #{{ error.token.group }}.
           No dictionary entry for <span class="font-mono">{{ error.token.key }}</span>.
         </div>
       </div>
