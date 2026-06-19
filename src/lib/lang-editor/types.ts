@@ -6,7 +6,6 @@ export interface Token {
   line: number;
   column: number;
   length: number;
-  group: number;
 }
 
 export interface DictionaryEntry {

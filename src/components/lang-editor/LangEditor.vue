@@ -23,7 +23,7 @@ async function copyOutput() {
   <div class="flex h-screen flex-col bg-background text-foreground">
     <EditorHeader v-model:mode="mode" :resolved="resolved" :source="source"/>
 
-    <div class="grid flex-1 grid-cols-2 divide-x overflow-hidden">
+    <div class="grid flex-1 md:grid-cols-2 divide-x overflow-hidden">
       <section class="flex flex-col overflow-hidden">
         <div class="border-b px-4 text-xs font-medium uppercase tracking-wide text-muted-foreground h-[47px] flex items-center">
           Editor

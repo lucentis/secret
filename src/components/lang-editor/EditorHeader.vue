@@ -19,9 +19,21 @@ function exportText() {
 }
 
 function exportJson() {
+  const symbols = props.resolved.items
+    .map((item) => item.symbol ?? item.token.raw)
+    .join(" ");
+
+  const tokens = props.resolved.items
+    .map((item) => item.token.raw)
+    .join(" ");
+
   const content = JSON.stringify(
     {
       source: props.source,
+      output: {
+        symbols,
+        tokens,
+      },
       items: props.resolved.items,
       errors: props.resolved.errors,
     },
@@ -29,7 +41,11 @@ function exportJson() {
     2
   );
 
-  downloadFile(content, "document.json", "application/json");
+  downloadFile(
+    content,
+    "document.json",
+    "application/json"
+  );
 }
 
 function downloadFile(

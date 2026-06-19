@@ -33,7 +33,15 @@ const ENTRIES: DictionaryEntry[] = [
   { key: "#in", symbol: "\u03bd" }, // nu
   { key: "#ou", symbol: "\u03c9" }, // omega
   { key: "#en", symbol: "\u03b8" }, // theta
-  { key: "#on", symbol: "\u03d1" }, // ϑ
+  { key: "#on", symbol: "\u03d1" }, // 
+  { key: ' ', symbol: ' '},
+  { key: ',', symbol: ','},
+  { key: '?', symbol: '?'},
+  { key: ';', symbol: ';'},
+  { key: '.', symbol: '.'},
+  { key: '/', symbol: '/'},
+  { key: ':', symbol: ':'},
+  { key: '!', symbol: '!'},
 ];
 
 const dictionary = new Map<string, SymbolId>(

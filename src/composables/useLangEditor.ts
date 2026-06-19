@@ -12,6 +12,7 @@ export function useLangEditor() {
   const tokens = computed(() => tokenize(source.value));
   const resolved = computed(() => resolveTokens(tokens.value));
   const charCount = computed(() => source.value.length);
+ 
 
   return { source, mode, cursor, tokens, resolved, charCount };
 }
