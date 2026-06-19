@@ -2,14 +2,14 @@
 import { computed } from "vue";
 import { Copy } from "lucide-vue-next";
 import { useLangEditor } from "@/composables/useLangEditor";
-import { dictionarySize } from "@/lib/lang-editor/dictionary";
 import EditorHeader from "./EditorHeader.vue";
 import EditorPane from "./EditorPane.vue";
 import SymbolOutput from "./SymbolOutput.vue";
 import ErrorPanel from "./ErrorPanel.vue";
 import StatusBar from "./StatusBar.vue";
+import { store } from "@/store/langEditor.ts";
 
-const { source, mode, cursor, resolved, charCount } = useLangEditor();
+const { resolved, charCount } = useLangEditor();
 
 const errorCount = computed(() => resolved.value.errors.length);
 
@@ -21,7 +21,7 @@ async function copyOutput() {
 
 <template>
   <div class="flex h-screen flex-col bg-background text-foreground">
-    <EditorHeader v-model:mode="mode" :resolved="resolved" :source="source"/>
+    <EditorHeader v-model:mode="store.mode" :resolved="resolved" :source="store.source"/>
 
     <div class="grid flex-1 md:grid-cols-2 divide-x overflow-hidden">
       <section class="flex flex-col overflow-hidden">
@@ -29,29 +29,29 @@ async function copyOutput() {
           Editor
         </div>
         <div class="flex-1 overflow-hidden">
-          <EditorPane v-model="source" @cursor="cursor = $event" />
+          <EditorPane v-model="store.source" @cursor="store.cursor = $event" />
         </div>
         <div class="flex items-center justify-between border-t px-4 py-2 font-mono text-xs text-muted-foreground">
-          <span>Ln {{ cursor.line }}, Col {{ cursor.column }}</span>
+          <span>Ln {{ store.cursor.line }}, Col {{ store.cursor.column }}</span>
           <span>{{ charCount }} chars</span>
         </div>
       </section>
 
       <section class="flex flex-col overflow-hidden">
         <div class="flex items-center justify-between border-b px-4 py-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          <span>Output ({{ mode }})</span>
+          <span>Output ({{ store.mode }})</span>
           <div class="flex overflow-hidden rounded-md border">
           <button
             class="px-3 py-1.5 text-xs font-medium transition-colors"
-            :class="mode === 'tokens' ? 'bg-violet-600 text-white' : 'bg-background text-muted-foreground hover:bg-muted'"
-            @click="mode = 'tokens'"
+            :class="store.mode === 'tokens' ? 'bg-violet-600 text-white' : 'bg-background text-muted-foreground hover:bg-muted'"
+            @click="store.mode = 'tokens'"
           >
             Tokens
           </button>
           <button
             class="px-3 py-1.5 text-xs font-medium transition-colors"
-            :class="mode === 'symbols' ? 'bg-violet-600 text-white' : 'bg-background text-muted-foreground hover:bg-muted'"
-            @click="mode = 'symbols'"
+            :class="store.mode === 'symbols' ? 'bg-violet-600 text-white' : 'bg-background text-muted-foreground hover:bg-muted'"
+            @click="store.mode = 'symbols'"
           >
             Symbols
           </button>
@@ -61,7 +61,7 @@ async function copyOutput() {
           </button>
         </div>
         <div class="flex-1 overflow-auto p-6">
-          <SymbolOutput :items="resolved.items" :mode="mode" />
+          <SymbolOutput :items="resolved.items" :mode="store.mode" />
         </div>
       </section>
     </div>
@@ -79,6 +79,6 @@ async function copyOutput() {
       <ErrorPanel :errors="resolved.errors" />
     </div>
 
-    <StatusBar :dictionary-size="dictionarySize" />
+    <StatusBar />
   </div>
 </template>

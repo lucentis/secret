@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import DictionaryDialog from './DictionaryDialog.vue';
 
-defineProps<{ dictionarySize: number }>();
 defineEmits<{ "view-dictionary": [] }>();
 
 const open = ref(false);
@@ -16,7 +15,6 @@ const open = ref(false);
       Ready
     </div>
     <div class="flex items-center gap-4">
-      <span>Dictionary: {{ dictionarySize }} tokens</span>
       <button
         class="rounded-md border border-violet-200 px-3 py-1 font-medium text-violet-600 hover:bg-violet-50"
         @click="open = true"

@@ -7,8 +7,18 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { useLangEditor } from "@/composables/useLangEditor";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { dictionaries } from "@/lib/lang-editor/dictionaries";
+import type { DictionaryType } from "@/lib/lang-editor/types";
+import { store } from "@/store/langEditor";
 
 defineProps<{
   open: boolean;
@@ -18,9 +28,8 @@ defineEmits<{
   "update:open": [boolean];
 }>();
 
-const { dictionaryType } = useLangEditor()
 
-const entries = computed(() => dictionaries[dictionaryType.value]);
+const entries = computed(() => dictionaries[store.dictionaryType]);
 
 const vowels = computed(() =>
   entries.value.filter((entry) => entry.category === "vowel")
@@ -49,6 +58,35 @@ const separators = computed(() =>
           Correspondance entre les sons et les symboles.
         </DialogDescription>
       </DialogHeader>
+
+      <div class="mb-6">
+        <label class="mb-2 block text-sm font-medium">
+          Alphabet
+        </label>
+
+        <Select
+          :model-value="store.dictionaryType"
+          @update:model-value="store.dictionaryType = $event as DictionaryType"
+        >
+          <SelectTrigger class="w-full">
+            <SelectValue placeholder="Choisir un alphabet" />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="greek">
+              Grec
+            </SelectItem>
+
+            <SelectItem value="shape">
+              Formes
+            </SelectItem>
+
+            <SelectItem value="rune">
+              Runes
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
       <div class="space-y-6">
         <!-- Voyelles -->

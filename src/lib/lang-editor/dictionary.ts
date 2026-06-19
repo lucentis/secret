@@ -1,19 +1,14 @@
 import { closestKeys } from "./suggestions";
-import type { DictionaryEntry, ResolvedToken, ResolveResult, SymbolId, Token } from "./types";
-import { useLangEditor } from "@/composables/useLangEditor";
+import type { DictionaryEntry, DictionaryType, ResolvedToken, ResolveResult, SymbolId, Token } from "./types";
 import { dictionaries } from "./dictionaries";
-// Vowels: keys with a dedicated keyboard key, no # prefix
-// Consonants: same, single keyboard letters
-// #ch, #gn, #in, #ou, #en: sounds with no dedicated key, written with #
-const { dictionaryType } = useLangEditor()
 
-const dictionaryMap = new Map<string, SymbolId>(
-  dictionaries[dictionaryType.value].map((entry: DictionaryEntry) => [entry.key, entry.symbol])
-);
+export function resolveTokens(tokens: Token[], dictionaryType: DictionaryType): ResolveResult {
+  console.log(dictionaryType);
+  
+  const dictionaryMap = new Map<string, SymbolId>(
+    dictionaries[dictionaryType].map((entry: DictionaryEntry) => [entry.key, entry.symbol])
+  );
 
-export const dictionarySize = dictionaryMap.size;
-
-export function resolveTokens(tokens: Token[]): ResolveResult {
   const items: ResolvedToken[] = [];
   const errors: ResolveResult["errors"] = [];
   const knownKeys = Array.from(dictionaryMap.keys());
